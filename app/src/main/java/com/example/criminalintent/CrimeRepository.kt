@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import androidx.room.migration.Migration
 import com.example.criminalintent.crime_database.CrimeDatabase
+import com.example.criminalintent.crime_database.migration_2_3
 import java.util.*
 import java.util.concurrent.Executors
 
@@ -14,8 +15,8 @@ private const val DATABASE_NAME = "crime-database"
 class CrimeRepository private constructor(context: Context) {
 
     private val database: CrimeDatabase =
-        Room.databaseBuilder(context.applicationContext, CrimeDatabase::class.java, DATABASE_NAME)
-            .fallbackToDestructiveMigrationFrom(1)
+        Room.databaseBuilder(context.applicationContext, CrimeDatabase::class.java, DATABASE_NAME).addMigrations(
+            migration_2_3)
             .build()
 
     private val crimeDao = database.crimeDao()
